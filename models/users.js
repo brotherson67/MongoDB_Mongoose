@@ -9,6 +9,10 @@ const UserSchema = new Schema(
     password: {
       type: string,
     },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
   },
   {
     toJSON: {
