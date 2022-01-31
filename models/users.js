@@ -21,3 +21,5 @@ const UserSchema = new Schema(
     id: false,
   }
 );
+
+export default UserSchema;
