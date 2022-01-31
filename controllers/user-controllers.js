@@ -1,5 +1,4 @@
-import { rmSync } from "fs";
-import users from "../models/users";
+const users = require("../models/users");
 
 const userController = {
   // add everything in here
@@ -67,4 +66,4 @@ const userController = {
   },
 };
 
-export default userController;
+module.exports = userController;

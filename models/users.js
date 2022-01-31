@@ -1,13 +1,13 @@
-import { Schema, model } from "mongoose";
+const { Schema, model } = require("mongoose");
 
 // create user schema
 const UserSchema = new Schema(
   {
     userName: {
-      type: string,
+      type: String,
     },
     password: {
-      type: string,
+      type: String,
     },
     createdAt: {
       type: Date,
@@ -24,4 +24,4 @@ const UserSchema = new Schema(
 
 const User = model("User", UserSchema);
 
-export default User;
+module.exports = User;

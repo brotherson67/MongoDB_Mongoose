@@ -11,13 +11,10 @@ app.use(express.static("public"));
 app.use(require("./routes"));
 
 // NEED TO CHANGE THE OR STATEMENT TO ANOTHER PORT
-mongoose.connect(
-  process.env.MOGODB_URI || "mongodb://localhost:27017/pizza-hunt",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
+mongoose.connect(process.env.MOGODB_URI || "mongodb://localhost:3002", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 //Use this to log mongo queries being executed!
 mongoose.set("debug", true);
