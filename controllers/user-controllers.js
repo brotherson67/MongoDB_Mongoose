@@ -82,10 +82,30 @@ const userController = {
 
   // down here I can add the links to other users as friends
 
-  // // Add friend
-  // addFriend({ params, body }, res) {
-  //   users.findOneAndUpdate({ _id: params.id });
-  // },
+  // Add friend
+  addFriend({ params, body }, res) {
+    users
+      .findOneAndUpdate(
+        { _id: params.id },
+        { $push: { connections: params.connectionId } },
+        { new: true }
+      )
+      // .populate({
+      //   path:
+      // })
+      .select("__v")
+      .then((dbUserData) => {
+        if (!dbUserData) {
+          res.status(404).json({ message: "sorry something went wrong there" });
+          return;
+        }
+        res.json(dbUserData);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.json(err);
+      });
+  },
 };
 
 module.exports = userController;
