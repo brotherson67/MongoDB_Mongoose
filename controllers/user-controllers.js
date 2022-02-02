@@ -1,4 +1,4 @@
-const users = require("../models/users");
+const { users } = require("../models");
 
 const userController = {
   // add everything in here
@@ -18,7 +18,7 @@ const userController = {
   // Get single user by id
   getUserById({ params }, res) {
     users
-      .findOne({ _id: params._id })
+      .findOne({ _id: params.id })
       .select("name")
       .then((dbUserData) => {
         // retrun 404 if no user
@@ -81,6 +81,11 @@ const userController = {
   },
 
   // down here I can add the links to other users as friends
+
+  // // Add friend
+  // addFriend({ params, body }, res) {
+  //   users.findOneAndUpdate({ _id: params.id });
+  // },
 };
 
 module.exports = userController;

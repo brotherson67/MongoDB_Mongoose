@@ -21,13 +21,13 @@ const UserSchema = new Schema(
     thoughts: [
       {
         type: Schema.Types.ObjectId,
-        ref: thoughts,
+        ref: "thoughts",
       },
     ],
     connections: [
       {
-        type: this.schema.Types.ObjectId,
-        ref: users,
+        type: Schema.Types.ObjectId,
+        ref: "users",
       },
     ],
   },
@@ -39,10 +39,10 @@ const UserSchema = new Schema(
   }
 );
 
-UserSchema.virtuals("connections").get(function () {
+UserSchema.virtual("connectionsAmount").get(function () {
   return this.connections.length;
 });
 
-const User = model("User", UserSchema);
+const users = model("users", UserSchema);
 
-module.exports = User;
+module.exports = users;
