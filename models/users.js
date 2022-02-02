@@ -39,6 +39,10 @@ const UserSchema = new Schema(
   }
 );
 
+UserSchema.virtuals("connections").get(function () {
+  return this.connections.length;
+});
+
 const User = model("User", UserSchema);
 
 module.exports = User;
