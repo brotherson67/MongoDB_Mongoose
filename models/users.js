@@ -5,14 +5,31 @@ const UserSchema = new Schema(
   {
     userName: {
       type: String,
+      required: true,
+      unique: true,
     },
-    password: {
+    email: {
       type: String,
+      unique: true,
+      required: true,
+      match: [/.+@.+\..+/],
     },
     createdAt: {
       type: Date,
       default: Date.now,
     },
+    thoughts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: thoughts,
+      },
+    ],
+    connections: [
+      {
+        type: this.schema.Types.ObjectId,
+        ref: users,
+      },
+    ],
   },
   {
     toJSON: {
