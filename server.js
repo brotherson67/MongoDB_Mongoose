@@ -1,28 +1,21 @@
 const express = require("express");
-const res = require("express/lib/response");
-const dbConnect = require("./connection/DBconnection");
+const dbConnect = require("./connection/dbConnection");
 const routesConnection = require("./routes");
+const mongoose = require("mongoose");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static("public"));
+// app.use(express.static("public"));
 
 app.use(routesConnection);
 
-// NEED TO CHANGE THE OR STATEMENT TO ANOTHER PORT
-dbConnect
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`🌍 Connected on localhost:${PORT}`);
-    });
-  })
-  .catch((err) => {
-    console.log(err);
-    res.status(500).json(err);
-  });
-
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/smbackend", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 //Use this to log mongo queries being executed!
-mongoose.set("debug", true);
+// mongoose.set("debug", true);
+app.listen(PORT, () => console.log(`App is running on port ${PORT}`));

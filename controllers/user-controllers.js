@@ -3,6 +3,18 @@ const users = require("../models/users");
 const userController = {
   // add everything in here
 
+  //test to see if server is working correctly
+  getUser(req, res) {
+    users
+      .find({})
+      .then((dbUserData) => {
+        res.json(dbUserData);
+      })
+      .catch((err) => {
+        res.status(400).json(err);
+      });
+  },
+
   // Get single user by id
   getUserById({ params }, res) {
     users
@@ -10,7 +22,9 @@ const userController = {
       .then((dbUserData) => {
         // retrun 404 if no user
         if (!dbUserData) {
-          res.status(404).json({ message: "User not found." });
+          res
+            .status(404)
+            .json({ message: "User not found. this is what is showing" });
           return;
         }
         res.json(dbUserData);
@@ -64,6 +78,8 @@ const userController = {
         res.status(400).json(err);
       });
   },
+
+  // down here I can add the links to other users as friends
 };
 
 module.exports = userController;
