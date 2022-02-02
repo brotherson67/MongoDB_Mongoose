@@ -16,6 +16,8 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/smbackend", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-//Use this to log mongo queries being executed!
-// mongoose.set("debug", true);
+
 app.listen(PORT, () => console.log(`App is running on port ${PORT}`));
+
+//Use this to log mongo queries being executed!
+mongoose.set("debug", true);
