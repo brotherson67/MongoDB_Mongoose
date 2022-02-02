@@ -19,6 +19,7 @@ const userController = {
   getUserById({ params }, res) {
     users
       .findOne({ _id: params._id })
+      .select("name")
       .then((dbUserData) => {
         // retrun 404 if no user
         if (!dbUserData) {
