@@ -4,6 +4,10 @@ const { Schema, model } = require("mongoose");
 
 const thoughtSchema = new Schema(
   {
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "users",
+    },
     thought: {
       type: String,
       minlength: 10,
