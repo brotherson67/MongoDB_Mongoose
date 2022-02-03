@@ -9,10 +9,10 @@ const {
   removeThought,
 } = require("../../controllers/thought-controllers");
 
-router.route("/thoughts").post(addThought).get(getAllThoughts);
+router.route("/").post(addThought).get(getAllThoughts);
 
 router
-  .route("/thoughts/:id")
+  .route("/:id")
   .get(getSingleThought)
   .put(updateThought)
   .delete(removeThought);
