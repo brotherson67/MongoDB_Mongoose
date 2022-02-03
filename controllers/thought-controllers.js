@@ -60,6 +60,21 @@ const thougthController = {
   },
 
   // delete thought
+  removeThought({ params }, res) {
+    thoughts
+      .findOneAndDelete({ _id: params.id })
+      .then((dbThoughtData) => {
+        if (!dbThoughtData) {
+          res.status(404).json({
+            message:
+              "Sorry we couldn't delete that thought because it wasnt' there",
+          });
+          return;
+        }
+        res.json(dbThoughtData);
+      })
+      .catch((err) => res.status(400).json(err));
+  },
 };
 
 module.exports = thougthController;
