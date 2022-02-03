@@ -29,9 +29,9 @@ const thougthController = {
   },
 
   // get thougth by id
-  getSingleThought(req, res) {
+  getSingleThought({ params }, res) {
     thoughts
-      .findOne({ _id: req.params.id })
+      .findOne({ _id: params.id })
       .select("thought")
       .then((dbThoughtData) => {
         if (!dbThoughtData) {
