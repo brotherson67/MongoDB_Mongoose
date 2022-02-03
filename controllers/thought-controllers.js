@@ -2,6 +2,15 @@ const { users, thoughts } = require("../models");
 const { find } = require("../models/users");
 
 const thougthController = {
+  // create thought
+  addThought({ body }, res) {
+    thoughts
+      // below I may need to desture this to just body and add {body}where req is
+      .create(body)
+      .then((dbThoughtData) => res.json(dbThoughtData))
+      .catch((err) => res.status(400).json(err));
+  },
+
   // Get all request
   getAllThoughts(req, res) {
     thoughts
@@ -35,6 +44,10 @@ const thougthController = {
         res.status(400).json(err);
       });
   },
+
+  //update thougth
+
+  // delete thought
 };
 
 module.exports = thougthController;
