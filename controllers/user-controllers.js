@@ -90,10 +90,12 @@ const userController = {
         { $push: { connections: params.connectionId } },
         { new: true }
       )
-      // .populate({
-      //   path:
-      // })
-      .select("__v")
+      .populate({
+        path: "friends",
+        select: "-__v",
+      })
+      .select("-__v")
+
       .then((dbUserData) => {
         if (!dbUserData) {
           res.status(404).json({ message: "sorry something went wrong there" });
@@ -115,6 +117,11 @@ const userController = {
         { $pull: { connections: params.connectionId } },
         { new: true }
       )
+      .populate({
+        path: "friends",
+        select: "-__v",
+      })
+      .select("-__v")
       .then((dbUserData) => {
         if (!dbUserData) {
           res.status(404).json({ message: "No friend found to delete." });
