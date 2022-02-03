@@ -106,6 +106,23 @@ const userController = {
         res.json(err);
       });
   },
+
+  // Remove friend
+  removeFriend({ params }, res) {
+    user
+      .findOneAndDelete({ _id: params.id })
+      .then((dbUserData) => {
+        if (!dbUserData) {
+          res.status(404).json({ message: "No friend found to delete." });
+          return;
+        }
+        res.json(dbUserData);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(400).json(err);
+      });
+  },
 };
 
 module.exports = userController;
