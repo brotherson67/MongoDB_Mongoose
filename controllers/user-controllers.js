@@ -7,6 +7,7 @@ const userController = {
   getUser(req, res) {
     users
       .find({})
+      .select("-__v")
       .then((dbUserData) => {
         res.json(dbUserData);
       })
@@ -19,7 +20,7 @@ const userController = {
   getUserById({ params }, res) {
     users
       .findOne({ _id: params.id })
-      .select("name")
+      .select(["userName", "-__v"])
       .then((dbUserData) => {
         // retrun 404 if no user
         if (!dbUserData) {
@@ -87,7 +88,7 @@ const userController = {
     users
       .findOneAndUpdate(
         { _id: params.id },
-        { $push: { connections: params.connectionId } },
+        { $push: { connections: body } },
         { new: true }
       )
       .populate({
@@ -110,11 +111,11 @@ const userController = {
   },
 
   // Remove friend
-  removeFriend({ params }, res) {
+  removeFriend({ params, body }, res) {
     user
       .findOneAndDelete(
         { _id: params.id },
-        { $pull: { connections: params.connectionId } },
+        { $pull: { connections: body } },
         { new: true }
       )
       .populate({

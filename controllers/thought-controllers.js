@@ -15,6 +15,7 @@ const thougthController = {
   getAllThoughts(req, res) {
     thoughts
       .find({})
+      .select("-__v")
       .then((dbThoughtData) => {
         if (!dbThoughtData) {
           res.status(404);
@@ -32,7 +33,7 @@ const thougthController = {
   getSingleThought({ params }, res) {
     thoughts
       .findOne({ _id: params.id })
-      .select("thought")
+      .select("-__v")
       .then((dbThoughtData) => {
         if (!dbThoughtData) {
           res.status(404).json({ message: "sorry that thought doesn't exist" });
@@ -46,9 +47,10 @@ const thougthController = {
   },
 
   //update thougth
-  updateThought({ params, body }) {
+  updateThought({ params, body }, res) {
     thoughts
       .findOneAndUpdate({ _id: params.id }, body, { new: true })
+      .select("-__v")
       .then((dbThoughtData) => {
         if (!dbThoughtData) {
           res.status(404);
@@ -63,6 +65,7 @@ const thougthController = {
   removeThought({ params }, res) {
     thoughts
       .findOneAndDelete({ _id: params.id })
+      .select("-__v")
       .then((dbThoughtData) => {
         if (!dbThoughtData) {
           res.status(404).json({
@@ -71,7 +74,7 @@ const thougthController = {
           });
           return;
         }
-        res.json(dbThoughtData);
+        res.json({ dbThoughtData });
       })
       .catch((err) => res.status(400).json(err));
   },
