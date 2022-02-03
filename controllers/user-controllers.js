@@ -110,7 +110,11 @@ const userController = {
   // Remove friend
   removeFriend({ params }, res) {
     user
-      .findOneAndDelete({ _id: params.id })
+      .findOneAndDelete(
+        { _id: params.id },
+        { $pull: { connections: params.connectionId } },
+        { new: true }
+      )
       .then((dbUserData) => {
         if (!dbUserData) {
           res.status(404).json({ message: "No friend found to delete." });
