@@ -46,6 +46,18 @@ const thougthController = {
   },
 
   //update thougth
+  updateThought({ params, body }) {
+    thoughts
+      .findOneAndUpdate({ _id: params.id }, body, { new: true })
+      .then((dbThoughtData) => {
+        if (!dbThoughtData) {
+          res.status(404);
+          return;
+        }
+        res.json(dbThoughtData);
+      })
+      .catch((err) => res.staus(400).json(err));
+  },
 
   // delete thought
 };
