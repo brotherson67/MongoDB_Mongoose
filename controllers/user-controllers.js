@@ -20,7 +20,7 @@ const userController = {
   getUserById({ params }, res) {
     users
       .findOne({ _id: params.id })
-      .select(["userName", "-__v"])
+      .select(["-__v"])
       .then((dbUserData) => {
         // retrun 404 if no user
         if (!dbUserData) {

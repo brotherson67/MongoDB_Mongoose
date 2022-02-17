@@ -5,13 +5,14 @@ const UserSchema = new Schema(
   {
     userName: {
       type: String,
-      // required: true,
+      required: true,
       unique: true,
+      trim: true,
     },
     email: {
       type: String,
       unique: true,
-      // required: true,
+      required: true,
       match: [/.+@.+\..+/],
     },
     createdAt: {
@@ -24,7 +25,7 @@ const UserSchema = new Schema(
         ref: "thoughts",
       },
     ],
-    connections: [
+    friends: [
       {
         type: Schema.Types.ObjectId,
         ref: "users",
@@ -39,7 +40,7 @@ const UserSchema = new Schema(
   }
 );
 
-UserSchema.virtual("connectionsAmount").get(function () {
+UserSchema.virtual("friendCount").get(function () {
   return this.connections.length;
 });
 
