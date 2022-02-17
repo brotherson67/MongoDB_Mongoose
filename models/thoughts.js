@@ -4,19 +4,20 @@ const { Schema, model } = require("mongoose");
 
 const thoughtSchema = new Schema(
   {
-    user: {
-      type: Schema.Types.ObjectId,
-      ref: "users",
-    },
-    thought: {
+    thoughtText: {
       type: String,
-      minlength: 10,
-      trim: true,
+      required: true,
+      charNum,
     },
     createdAt: {
       type: Date,
       default: Date.now,
     },
+    username: {
+      type: String,
+      required: true,
+    },
+    reactions: [{ ref: "reaction" }],
   },
   {
     toJSON: {
