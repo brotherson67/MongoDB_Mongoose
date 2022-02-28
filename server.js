@@ -1,22 +1,19 @@
 const express = require("express");
-const routesConnection = require("./routes");
 const mongoose = require("mongoose");
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3001;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-// app.use(express.static("public"));
+app.use(express.static("public"));
 
-app.use(routesConnection);
-
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/smbackend", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
-app.listen(PORT, () => console.log(`App is running on port ${PORT}`));
-
-//Use this to log mongo queries being executed!
+mongoose.connect(
+  process.env.MONGODB_URI || "mongodb://localhost:27017/pizza-hunt",
+  {}
+);
 mongoose.set("debug", true);
+
+app.use(require("./routes"));
+
+app.listen(PORT, () => console.log(`Connected on port ${PORT}`));
