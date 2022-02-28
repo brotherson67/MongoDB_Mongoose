@@ -1,8 +1,6 @@
 const { users } = require("../models");
 
 const userController = {
-  // add everything in here
-
   //test to see if server is working correctly
   getUser(req, res) {
     users

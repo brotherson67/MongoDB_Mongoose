@@ -7,6 +7,13 @@ const thougthController = {
     thoughts
       // below I may need to desture this to just body and add {body}where req is
       .create(body)
+      .then(({ _id }) => {
+        return users.findByIdAndUpdate(
+          { _id: body.userId },
+          { $push: { thougths: _id } },
+          { new: true }
+        );
+      })
       .then((dbThoughtData) => res.json(dbThoughtData))
       .catch((err) => res.status(400).json(err));
   },
@@ -72,7 +79,11 @@ const thougthController = {
             message:
               "Sorry we couldn't delete that thought because it wasnt' there",
           });
-          return;
+          return users.findOneAndUpdate(
+            { username: thoughtData.username },
+            { $pull: { thoughts: params.id } },
+            { new: true }
+          );
         }
         res.json({ dbThoughtData });
       })

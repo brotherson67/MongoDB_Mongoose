@@ -1,10 +1,11 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, Types } = require("mongoose");
 
 // combine reactions into this file
-const reactionSchema = newSchema(
+const reactionSchema = new Schema(
   {
-    _id: {
-      type: ID,
+    reactionId: {
+      type: Types.ObjectId,
+      default: () => new Types.ObjectId(),
     },
     reactionBody: {
       type: String,
@@ -24,12 +25,11 @@ const reactionSchema = newSchema(
 
 // create Thoughts schema
 
-const thoughtSchema = new Schema(
+const ThoughtSchema = new Schema(
   {
     thoughtText: {
       type: String,
       required: true,
-      charNum,
     },
     createdAt: {
       type: Date,
@@ -53,6 +53,6 @@ ThoughtSchema.virtual("reactionCount").get(function () {
   return this.reactions.length;
 });
 
-const Thoughts = model("Thoughts", thoughtSchema);
+const Thoughts = model("Thoughts", ThoughtSchema);
 
 module.exports = Thoughts;
