@@ -1,7 +1,7 @@
 const { Schema, model, Types } = require("mongoose");
+const moment = require("moment");
 
-// combine reactions into this file
-const reactionSchema = new Schema(
+const ReactionSchema = new Schema(
   {
     reactionId: {
       type: Types.ObjectId,
@@ -10,40 +10,42 @@ const reactionSchema = new Schema(
     reactionBody: {
       type: String,
       required: true,
+      maxLength: 280,
     },
     username: {
       type: String,
       required: true,
     },
     createdAt: {
-      type: Date,
-      default: Date.now,
+      type: String,
+      default: moment().format("MMMM Do YYYY"),
     },
   },
-  {}
+  { _id: false }
 );
-
-// create Thoughts schema
 
 const ThoughtSchema = new Schema(
   {
     thoughtText: {
       type: String,
       required: true,
+      minlength: 1,
+      maxLength: 280,
     },
     createdAt: {
-      type: Date,
-      default: Date.now,
+      type: String,
+      default: moment().format("MMMM Do YYYY"),
     },
     username: {
       type: String,
       required: true,
     },
-    reactions: [reactionSchema],
+    reactions: [ReactionSchema],
   },
   {
     toJSON: {
       virtuals: true,
+      getters: true,
     },
     id: false,
   }
@@ -53,6 +55,6 @@ ThoughtSchema.virtual("reactionCount").get(function () {
   return this.reactions.length;
 });
 
-const Thoughts = model("Thoughts", ThoughtSchema);
+const Thought = model("thought", ThoughtSchema);
 
-module.exports = Thoughts;
+module.exports = Thought;

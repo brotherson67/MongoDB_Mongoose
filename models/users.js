@@ -1,9 +1,9 @@
 const { Schema, model } = require("mongoose");
+const { isEmail } = require("validator");
 
-// create user schema
 const UserSchema = new Schema(
   {
-    userName: {
+    username: {
       type: String,
       required: true,
       unique: true,
@@ -11,39 +11,36 @@ const UserSchema = new Schema(
     },
     email: {
       type: String,
-      unique: true,
       required: true,
+      unique: true,
       match: [/.+@.+\..+/],
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now,
     },
     thoughts: [
       {
         type: Schema.Types.ObjectId,
-        ref: "thoughts",
+        ref: "Thought",
       },
     ],
     friends: [
       {
         type: Schema.Types.ObjectId,
-        ref: "users",
+        ref: "User",
       },
     ],
   },
   {
     toJSON: {
       virtuals: true,
+      getters: true,
     },
     id: false,
   }
 );
 
 UserSchema.virtual("friendCount").get(function () {
-  return this.connections.length;
+  return this.friends.length;
 });
 
-const users = model("users", UserSchema);
+const User = model("user", UserSchema);
 
-module.exports = users;
+module.exports = User;
