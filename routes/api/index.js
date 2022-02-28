@@ -1,13 +1,8 @@
-// CREATE EXPRESS INSTANCE
 const router = require("express").Router();
+const userRoutes = require("./user-routes");
+const thoughtRoutes = require("./thought-routes");
 
-// IMPORT ROUTES
-const user = require("./user-routes");
-const thought = require("./thought-routes");
+router.use("/users", userRoutes);
+router.use("/thoughts", thoughtRoutes);
 
-// ASSIGN URI
-router.use("/user", user);
-router.use("/thought", thought);
-
-// EXPORT ALL
 module.exports = router;
