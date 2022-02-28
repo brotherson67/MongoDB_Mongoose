@@ -1,5 +1,27 @@
 const { Schema, model } = require("mongoose");
 
+// combine reactions into this file
+const reactionSchema = newSchema(
+  {
+    _id: {
+      type: ID,
+    },
+    reactionBody: {
+      type: String,
+      required: true,
+    },
+    username: {
+      type: String,
+      required: true,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+  },
+  {}
+);
+
 // create Thoughts schema
 
 const thoughtSchema = new Schema(
@@ -17,7 +39,7 @@ const thoughtSchema = new Schema(
       type: String,
       required: true,
     },
-    reactions: [{ ref: "reaction" }],
+    reactions: [reactionSchema],
   },
   {
     toJSON: {
@@ -26,6 +48,10 @@ const thoughtSchema = new Schema(
     id: false,
   }
 );
+
+ThoughtSchema.virtual("reactionCount").get(function () {
+  return this.reactions.length;
+});
 
 const Thoughts = model("Thoughts", thoughtSchema);
 
