@@ -90,6 +90,25 @@ const thoughtController = {
       })
       .catch((err) => res.status(500).json(err));
   },
+
+  // add reaction
+  addReaction({ params, body }, res) {
+    //I might need to add a plural reactions to the push part
+    thoughts
+      .findOneAndUpdate(
+        { _id: params.id },
+        { $push: { reactions: body } },
+        { new: true }
+      )
+      .then((data) => {
+        if (!data) {
+          res.status(404).json({ message: "sorry that thought doesn't exist" });
+          return;
+        }
+        res.json(data);
+      })
+      .catch((err) => res.status(400).json(err));
+  },
 };
 
 module.exports = thoughtController;

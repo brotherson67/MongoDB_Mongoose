@@ -1,24 +1,23 @@
-const { Schema, model, Types } = require("mongoose");
+const { Schema, model } = require("mongoose");
+const reaction = require("./reactions");
 
 const ReactionSchema = new Schema(
   {
-    reactionId: {
-      type: Types.ObjectId,
-      default: () => new Types.ObjectId(),
-    },
-    reactionBody: {
+    thoughtText: {
       type: String,
-      required: true,
-      maxLength: 280,
-    },
-    username: {
-      type: String,
+      minlength: 1,
+      maxlength: 280,
       required: true,
     },
     createdAt: {
       type: String,
       default: Date.now,
     },
+    username: {
+      type: Schema.Types.ObjectId,
+      ref: "users",
+    },
+    reactions: [reaction],
   },
   { _id: false }
 );
