@@ -1,9 +1,10 @@
-const { Schema } = require("mongoose");
+const { Schema, Types } = require("mongoose");
 
 const ReactionSchema = new Schema(
   {
     reactionId: {
-      type: Schema.Types.ObjectId,
+      type: Types.ObjectId,
+      default: () => new Types.ObjectId(),
     },
     reactionBody: {
       type: String,

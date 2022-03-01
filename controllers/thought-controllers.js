@@ -85,7 +85,7 @@ const thougthController = {
     thoughts
       .findOneAndUpdate(
         { _id: params.id },
-        { $push: { reaction: body } },
+        { $push: { reactions: body } },
         { new: true }
       )
       .then((data) => {
@@ -95,7 +95,7 @@ const thougthController = {
         }
         res.json(data);
       })
-      .catch((err) => res.json(err));
+      .catch((err) => res.status(400).json(err));
   },
 };
 
